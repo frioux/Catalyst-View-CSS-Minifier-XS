@@ -30,15 +30,6 @@ sub mk_compclass {
 
 L<Catalyst::Manual>, L<Catalyst::Helper>
 
-=head1 AUTHOR
-
-Ivan Drinchev, C<drinchev@gmail.com>
-
-=head1 LICENSE
-
-This library is free software . You can redistribute it and/or modify
-it under the same terms as perl itself.
-
 =cut
 
 1;
@@ -49,6 +40,8 @@ __compclass__
 package [% class %];
 
 use strict;
-use base 'Catalyst::View::CSS::Minifier::XS';
+use warnings;
+
+use parent 'Catalyst::View::CSS::Minifier::XS';
 
 1;
