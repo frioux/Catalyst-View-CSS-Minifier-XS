@@ -1,5 +1,12 @@
 Revision history for Catalyst-View-CSS-Minifier-XS
 
+1.093030    2009-10-30 3:36 AM, CST
+                Significant changes migrated from sister module
+                C::V::JavaScript::Minifier::XS.  Mostly to the end
+                user this means that:
+                Configuration will work from all correct places
+                and referrers are necesary as often
+
 0.03    23.02.2009/13:25
                 [bugfix] when no files parsed print nothing
 
