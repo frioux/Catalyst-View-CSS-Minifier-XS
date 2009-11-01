@@ -1,5 +1,8 @@
 Revision history for Catalyst-View-CSS-Minifier-XS
 
+1.093050    2009-11-01 1:26 AM, CST
+               Don't duplicate pod.  It looks ridiculous.
+
 1.093030    2009-10-30 3:36 AM, CST
                 Significant changes migrated from sister module
                 C::V::JavaScript::Minifier::XS.  Mostly to the end
