@@ -13,7 +13,7 @@ use Catalyst::Test 'TestApp2';
 
 my $served = get('/test');
 
-my $path = File::Spec->catfile($FindBin::Bin, qw{lib TestApp2 root ssc foo.css});
+my $path = File::Spec->catfile($FindBin::Bin, qw{lib TestApp2 different_root ssc foo.css});
 open my $file, '<', $path;
 
 my $str = q{};
