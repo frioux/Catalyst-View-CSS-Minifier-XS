@@ -2,6 +2,7 @@ package Catalyst::View::CSS::Minifier::XS;
 
 # ABSTRACT: Minify your served CSS files
 
+use autodie;
 use Moose;
 extends 'Catalyst::View';
 
