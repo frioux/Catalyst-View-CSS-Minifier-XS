@@ -1,6 +1,10 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+         Rename 'path' config var to 'css_dir' (with an alias for
+         backcompat).  Path is too easy to
+         confuse with other kinds of paths.
+         Stop using RJBS-versions
          Fix module such that the debug output only shows if the
            server is in debug mode
 

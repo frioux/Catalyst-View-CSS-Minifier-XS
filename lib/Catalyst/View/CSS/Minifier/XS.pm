@@ -4,11 +4,20 @@ package Catalyst::View::CSS::Minifier::XS;
 
 use autodie;
 use Moose;
+
 extends 'Catalyst::View';
 
 use CSS::Minifier::XS qw/minify/;
-use Path::Class::File;
+use Moose::Util::TypeConstraints;
+use MooseX::Aliases;
+use Path::Class::Dir;
 use URI;
+
+my $dir_type = __PACKAGE__.'::Dir';
+subtype $dir_type => as class_type('Path::Class::Dir');
+coerce $dir_type,
+    from 'Str',      via { Path::Class::Dir->new($_)  },
+    from 'ArrayRef', via { Path::Class::Dir->new(@$_) };
 
 has stash_variable => (
    is => 'ro',
@@ -16,10 +25,12 @@ has stash_variable => (
    default => 'css',
 );
 
-has path => (
-   is => 'ro',
-   isa => 'Str',
+has css_dir => (
+   is      => 'ro',
+   isa     => $dir_type,
+   coerce  => 1,
    default => 'css',
+   alias   => 'path',
 );
 
 has subinclude => (
@@ -27,6 +38,13 @@ has subinclude => (
    isa => 'Bool',
    default => undef,
 );
+
+# for backcompat. don't use this.
+has 'INCLUDE_PATH' => (
+    is     => 'ro',
+    isa    => $dir_type,
+    coerce => 1,
+   );
 
 sub process {
    my ($self,$c) = @_;
@@ -38,10 +56,15 @@ sub process {
 
    push @files, $self->_subinclude($c, $original_stash, @files);
 
-   my $home = $self->config->{INCLUDE_PATH} || $c->path_to('root');
+   # the 'root' conf var might not be absolute
+   my $abs_root = Path::Class::Dir->new( $c->config->{'root'} )->absolute( $c->path_to );
+   my $dir   = $self->css_dir->absolute( $abs_root );
+
+   # backcompat only
+   $dir = $self->INCLUDE_PATH->subdir($dir) if $self->INCLUDE_PATH;
+
    @files = map {
-      $_ =~ s/\.css//;
-      Path::Class::File->new( $home, $self->path, "$_.css" );
+      $_ =~ s/\.css//;  $dir->file( "$_.css" )
    } grep { defined $_ && $_ ne '' } @files;
 
    my @output = $self->_combine_files($c, \@files);
@@ -144,9 +167,10 @@ are read from C<< $c->stash->{css} >> as array or string.
 
 sets a different stash variable from the default C<< $c->stash->{css} >>
 
-=item path
+=item css_dir
 
-sets a different path for your css files
+Directory containing your css files.  If a relative path is
+given, it is taken as relative to your app's root directory.
 
 default : css
 
