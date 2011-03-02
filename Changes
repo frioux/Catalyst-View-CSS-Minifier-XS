@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+         Add last-modified header for great justice (rbuels)
          Rename 'path' config var to 'css_dir' (with an alias for
          backcompat).  Path is too easy to
          confuse with other kinds of paths.
