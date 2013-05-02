@@ -66,7 +66,7 @@ sub process {
    $dir = $self->INCLUDE_PATH->subdir($dir) if $self->INCLUDE_PATH;
 
    @files = map {
-      $_ =~ s/\.css//;  $dir->file( "$_.css" )
+      $_ =~ s/\.css$//;  $dir->file( "$_.css" )
    } grep { defined $_ && $_ ne '' } @files;
 
    my $output = $self->_combine_files($c, \@files);
