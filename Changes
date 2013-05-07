@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.000002  2013-05-07 18:36:56 CST6CDT
          Fix path munging regex to only grab extensions (William Lang)
          Abandon RT
 
